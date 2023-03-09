@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--link href="bootstrap-5.1.3-dist/css/bootstrap.css" rel="stylesheet" type="text/css"-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <style>
+        h3{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        footer{
+            margin-top: 5%;
+        }
+    </style>
+</head>
+    <body>
+        <header th:insert="blocks/no_search_admin_header :: no_search_admin_header"></header>
+        <div class="container">
+            <h3>All Clients Orders</h3>
+
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Date of creation</th>
+                    <th>Last modified date</th>
+                    <th>Total amount</th>
+                    <th>Total sum</th>
+                    <th>Status</th>
+                    <th>Change status</th>
+                    <th></th>
+                </tr>
+                <tr th:each="orderInfo : ${allOrders}">
+                    <td th:utext="${orderInfo.id}">..</td>
+                    <td th:utext="${orderInfo.create_data}">..</td>
+                    <td th:utext="${orderInfo.last_update}">..</td>
+                    <td th:utext="${orderInfo.total_amount}">..</td>
+                    <td th:utext="${orderInfo.total_sum}">..</td>
+                    <td th:utext="${orderInfo.status.name}">..</td>
+
+                        <form th:action="@{/view_all_clients_orders}" th:object="${updateStatusForm}" method="POST">
+                            <!--input type="hidden" name="client_id" th:value="${orderInfo.client.id}"-->
+                            <input type="hidden" name="order_id" th:value="${orderInfo.id}">
+                            <!--input type="hidden" name="status_id" th:each="statusName : ${allStatuses}" th:utext="${statusName.id}"-->
+                            <td>
+                                <div class="col">
+                                    <select class="form-select" th:field="*{statusId}" required="">
+                                        <option value="0">Choose...</option>
+                                        <option th:each="statusInf : ${allStatuses}" th:utext="${statusInf.name}" th:value="${statusInf.id}">..</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a valid status.
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <!--div th:switch="${orderInfo.status.id}">
+                                    <p th:case="8"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                                    <p th:case="*"><button type="submit" class="btn btn-warning">Change status</button></p>
+                                </div-->
+                                <div>
+                                    <p th:if="${orderInfo.status.id} == 8"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                                    <p th:if="${orderInfo.status.id} == 9"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                                    <p th:if="${orderInfo.status.id} == 10"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                                    <p th:if="${orderInfo.status.id} != 8 and ${orderInfo.status.id} != 9 and ${orderInfo.status.id} != 10"><button type="submit" class="btn btn-warning">Change order status</button></p>
+                                </div>
+                            </td>
+                        </form>
+
+                            <!--a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false" role="button">Dropdown</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul-->
+                        <!--nav class="navbar navbar-expand-lg">
+                            <div class="container-fluid">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                ID
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                                <li><a class="dropdown-item" th:href="${ref}">Sort Descending</a></li>
+                                                <li><a class="dropdown-item" th:href="${ref1}">Sort Ascending</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav-->
+                        <!--form th:action="@{/all_clients_orders}" th:object="${orderInfo}" method="POST">
+                            <input type="hidden" name="client_id" th:value="${orderInfo.client.id}">
+                            <input type="hidden" name="order_id" th:value="${orderInfo.id}">
+                            <div th:switch="${orderInfo.status.id}">
+                                <p th:case="8"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                                <p th:case="*"><button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Change status</button></p>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Действие</a></li>
+                                    <li><a class="dropdown-item" href="#">Другое действие</a></li>
+                                    <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                                </ul>
+                            </div>
+                        </form-->
+                        <!--div class="btn-group" th:switch="${orderInfo.status.id}">
+                            <button th:case="8" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Not available
+                            </button>
+                            <button th:case="*" type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Действие
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a type="submit" class="dropdown-item" href="#">Действие</a></li>
+                                <li><a class="dropdown-item" href="#">Другое действие</a></li>
+                                <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                            </ul>
+                        </div-->
+                    <!--/td-->
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer" th:insert="blocks/footer :: footer"></div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    </body>
+</html>

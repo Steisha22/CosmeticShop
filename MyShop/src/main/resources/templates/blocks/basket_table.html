@@ -1,0 +1,26 @@
+<div th:fragment="basket_table">
+    <table  class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>Marka</th>
+            <th>To Delete</th>
+        </tr>
+        <tr th:each="productInfo : ${allProducts}">
+            <td th:utext="${productInfo.id}">..</td>
+            <td th:utext="${productInfo.name}">..</td>
+            <td th:utext="${productInfo.price}">..</td>
+            <td th:utext="${productInfo.amount}">..</td>
+            <td th:utext="${productInfo.marka}">..</td>
+            <td>
+                <form th:action="@{/basket}" th:object="${productInfo}" method="POST">
+                    <input type="hidden" name="id" th:value="${productInfo.id}">
+                    <input type="hidden" name="amount" th:value="${productInfo.amount}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>

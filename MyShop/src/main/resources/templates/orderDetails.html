@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        h3{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="blocks/no_search_header :: no_search_header"></header>
+<div class="py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-start">
+        <h2>Profile</h2>
+        <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="/contact_info" class="nav-link link-dark px-2">Contact Information</a></li>
+                <li class="nav-item"><a href="/history_order" class="nav-link link-dark px-2">Order History</a></li>
+                <li class="nav-item"><a href="/my_request" class="nav-link link-dark px-2">My Requests</a></li>
+            </ul>
+        </a>
+    </div>
+</div>
+<div class="container">
+    <h3 th:utext="'Order №' + ${order.id}"></h3>
+
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Date of creation</th>
+            <th>Last modified date</th>
+            <th>Total amount</th>
+            <th>Total sum</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td th:utext="${order.id}">..</td>
+            <td th:utext="${order.create_data}">..</td>
+            <td th:utext="${order.last_update}">..</td>
+            <td th:utext="${order.total_amount}">..</td>
+            <td th:utext="${order.total_sum}">..</td>
+            <td th:utext="${order.status.name}">..</td>
+        </tr>
+    </table>
+    <br>
+    <table class="table table-hover">
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Product Marka</th>
+            <th>Amount</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="productInf : ${order.list_of_products}">
+            <td th:utext="${productInf.cosmeticProduct.id}">..</td>
+            <td th:utext="${productInf.cosmeticProduct.name}">..</td>
+            <td th:utext="${productInf.cosmeticProduct.marka}">..</td>
+            <td th:utext="${productInf.amount}">..</td>
+            <td th:utext="${productInf.price}">..</td>
+        </tr>
+    </table>
+
+    <a class="btn btn-warning btn-lg a" href="/history_order" role="button">View all orders</a>
+</div>
+
+<div class="footer fixed-bottom" th:insert="blocks/footer :: footer"></div>
+</body>
+</html>

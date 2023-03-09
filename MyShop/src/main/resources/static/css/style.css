@@ -1,0 +1,39 @@
+/*a{
+    float: right;
+}
+.btn.a{
+    float: left;
+}
+body {
+    background: url('../images/MakeupMiniSlide.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}*/
+
+.text{
+    display: flex;
+}
+
+.content{
+    justify-content: center;
+
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-primary{
+    background-color: pink;
+    border-color: deeppink;
+}
+
+.btn-primary:hover{
+    background-color: deeppink;
+    border-color: deeppink;
+}
+

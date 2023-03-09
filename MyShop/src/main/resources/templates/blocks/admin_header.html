@@ -1,0 +1,32 @@
+<div th:fragment="admin_header">
+    <link th:href="@{/css/FonStyle.css}" rel="stylesheet">
+    <nav class="py-2 border-bottom">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li class="nav-item"><a href="/" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="/eyes" class="nav-link link-dark px-2">Eyes</a></li>
+                <li class="nav-item"><a href="/face" class="nav-link link-dark px-2">Face</a></li>
+                <li class="nav-item"><a href="/lips" class="nav-link link-dark px-2">Lips</a></li>
+                <li class="nav-item"><a href="/body" class="nav-link link-dark px-2">Body</a></li>
+            </ul>
+            <ul class="nav">
+                <li class="nav-item"><a href="/view_all_clients_orders" class="nav-link link-dark px-2">Orders</a></li>
+                <li class="nav-item"><a href="/view_all_clients_requests" class="nav-link link-dark px-2">Clients Requests</a></li>
+                <li class="nav-item"><a href="/admin_profile" class="nav-link link-dark px-2">Profile</a></li>
+                <li class="nav-item"><a href="/admin" class="nav-link link-dark px-2"><font color="#ff6347">Admin</font></a></li>
+            </ul>
+        </div>
+    </nav>
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-4">Search products by name or price</span>
+            </a>
+            <form th:action="@{/}" th:object="${SearchForm}" class="d-flex" role="search" method="POST">
+                <input type="text" name="value" class="form-control me-2" placeholder="Search" aria-label="Search" field="*{value}">
+                <button class="btn btn-outline-dark" type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+</div>

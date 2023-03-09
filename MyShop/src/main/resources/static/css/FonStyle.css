@@ -1,0 +1,35 @@
+nav.py-2.bg-light.border-bottom{
+    background-color: lightsalmon;
+}
+
+.navbar.navbar-expand-lg{
+    /*background-color: darksalmon;*/
+    background-color: lightsalmon;
+}
+
+.btn.btn-outline-dark{
+    border-color: lightsalmon;
+}
+
+.btn.btn-outline-dark:hover{
+    background-color: lightsalmon;
+    border-color: lightsalmon;
+}
+
+.btn.btn-success{
+    background-color: lightsalmon;
+    border-color: lightsalmon;
+}
+
+.btn.btn-success:hover{
+    background-color: darksalmon;
+    border-color: darksalmon;
+}
+
+body {
+    background: url('../images/MakeupMiniSlide.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!--link href="bootstrap-5.1.3-dist/css/bootstrap.css" rel="stylesheet" type="text/css"-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <style>
+        h3{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<header th:insert="blocks/no_search_admin_header :: no_search_admin_header"></header>
+<div class="container">
+    <h3>All Clients Requests</h3>
+
+    <table class="table table-hover">
+        <tr>
+            <th>Request Number</th>
+            <th>Order Number</th>
+            <th>Client ID</th>
+            <th>Date of creation</th>
+            <th>Last modified date</th>
+            <th>Status</th>
+            <th>Change status</th>
+            <th></th>
+        </tr>
+        <tr th:each="requestInfo : ${allRequests}">
+            <td th:utext="${requestInfo.id}">..</td>
+            <td th:utext="${requestInfo.order.id}">..</td>
+            <td th:utext="${requestInfo.client.id}">..</td>
+            <td th:utext="${requestInfo.create_data}">..</td>
+            <td th:utext="${requestInfo.last_update_data}">..</td>
+            <td th:utext="${requestInfo.request_status.name}">..</td>
+            <form th:action="@{/view_all_clients_requests}" th:object="${updateStatusForm}" method="POST">
+                <!--input type="hidden" name="client_id" th:value="${requestInfo.client.id}">
+                <input type="hidden" name="admin_id" th:value="${requestInfo.admin.id}"-->
+                <input type="hidden" name="request_id" th:value="${requestInfo.id}">
+                <input type="hidden" name="order_id" th:value="${requestInfo.order.id}">
+                <td>
+                    <div class="col">
+                        <select class="form-select" th:field="*{statusId}" required="">
+                            <option value="0">Choose...</option>
+                            <option th:each="statusInf : ${allStatuses}" th:utext="${statusInf.name}" th:value="${statusInf.id}">..</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid status.
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <!--div th:switch="${requestInfo.request_status.id}">
+                        <p th:case="3"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                        <p th:case="*"><button type="submit" class="btn btn-warning">Change status</button></p>
+                    </div-->
+                    <div>
+                        <p th:if="${requestInfo.request_status.id} == 3"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                        <p th:if="${requestInfo.request_status.id} == 2"><button type="button" class="btn btn-secondary btn-sm">Not available</button></p>
+                        <p th:if="${requestInfo.request_status.id} != 2 and ${requestInfo.request_status.id} != 3"><button type="submit" class="btn btn-warning">Change status</button></p>
+                    </div>
+                </td>
+            </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer fixed-bottom" th:insert="blocks/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
